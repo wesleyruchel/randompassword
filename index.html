@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Password Generator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+
+<body>
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="form-control" id="inputPassword" readonly>
+          <div class="input-group-append">
+            <button class="btn btn-success" type="button" onclick="copy()">Copy</button>
+            <button class="btn btn-primary" type="button" onclick="generate()">Generate</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="range">
+              <label for="customRange" id="dislpayRange">Password Length <span
+                  id="customRangeValueDisplay"></span></label>
+              <input type="range" class="form-range" min="1" max="50" step="1" value="12" id="customRange" />
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" checked="checked" id="chkUpperase">
+              <label class="form-check-label" for="chkUpperase">Uppercase</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" checked="checked" id="chkLowercase">
+              <label class="form-check-label" for="chkLowercase">Lowercase</label>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" checked="checked" id="chkNumbers">
+              <label class="form-check-label" for="chkNumbers">Numbers</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="chkSymbols">
+              <label class="form-check-label" for="chkSymbols">Symbols</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const slider = document.getElementById("customRange");
+    const output = document.getElementById("customRangeValueDisplay");
+
+    slider.addEventListener("input", updateSliderValue);
+    updateSliderValue();
+
+    function updateSliderValue() {
+      output.innerHTML = slider.value;
+    }
+
+    function copy() {
+      const inputPassword = document.getElementById("inputPassword");
+      inputPassword.select();
+      document.execCommand("copy");
+    }
+
+    function generate() {
+      const inputPassword = document.getElementById("inputPassword");
+      inputPassword.value = "Texto gerado dinamicamente";
+    }
+
+    function updateDisplayRange() {
+      document.getElementById("customRangeValueDisplay").innerHTML = document.getElementById("customRange").value;
+    }
+  </script>
+</body>
+
+</html>
