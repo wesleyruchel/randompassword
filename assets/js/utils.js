@@ -3,9 +3,18 @@ const rangeOutput = document.getElementById('range-output')
 const generateButton = document.getElementById('generate-button')
 const copyButton = document.getElementById('copy-button')
 const passwordInput = document.getElementById('password-input')
+const options = document.querySelectorAll('input[type="checkbox"]')
 
 function updateSliderValue() {
   rangeOutput.innerHTML = rangeCustomInput.value
+}
+
+function countOptionsChecked() {
+  let c = 0
+  options.forEach((checkbox) => {
+    if (checkbox.checked) c++
+  })
+  return c
 }
 
 function showAlertMessage(message, type, element, timeout) {
@@ -22,6 +31,7 @@ function showAlertMessage(message, type, element, timeout) {
 }
 
 updateSliderValue()
+countOptionsChecked()
 
 //  *------ Listeners ------* //
 document.addEventListener('DOMContentLoaded', () => {
@@ -51,4 +61,10 @@ copyButton.addEventListener('click', () => {
 rangeCustomInput.addEventListener('input', () => {
   updateSliderValue()
   passwordInput.value = window.generatePassword()
+})
+
+options.forEach((checkbox) => {
+  checkbox.addEventListener('change', () => {
+    if (countOptionsChecked() === 0) checkbox.checked = 'checked'
+  })
 })
