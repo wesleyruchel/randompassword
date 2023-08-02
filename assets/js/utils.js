@@ -3,7 +3,10 @@ const rangeOutput = document.getElementById('range-output')
 const generateButton = document.getElementById('generate-button')
 const copyButton = document.getElementById('copy-button')
 const passwordInput = document.getElementById('password-input')
-const options = document.querySelectorAll('input[type="checkbox"]')
+const options = document.querySelectorAll(
+  'input[type="checkbox"][data-control-checked="true"]'
+)
+const darkModeToggleButton = document.getElementById('dark-mode-toggle-button')
 
 function updateSliderValue() {
   rangeOutput.innerHTML = rangeCustomInput.value
@@ -14,20 +17,31 @@ function countOptionsChecked() {
   options.forEach((checkbox) => {
     if (checkbox.checked) c++
   })
+  console.log(c)
   return c
 }
 
-function showAlertMessage(message, type, element, timeout) {
-  const alert = document.createElement('div')
-  alert.classList.add('alert', type, 'mt-3')
-  alert.innerHTML = message
+function showAlertMessage(message, type, timeout) {
+  const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+  const wrapper = document.createElement('div')
+  wrapper.innerHTML = [
+    `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+    `   <div>${message}</div>`,
+    '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+    '</div>'
+  ].join('')
 
-  const container = document.getElementById(element)
-  container.appendChild(alert)
+  alertPlaceholder.append(wrapper)
 
   setTimeout(function () {
-    alert.remove()
+    wrapper.remove()
   }, timeout)
+}
+
+function toggleDarkMode() {
+  const currentTheme = document.documentElement.getAttribute('data-bs-theme')
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark'
+  document.documentElement.setAttribute('data-bs-theme', newTheme)
 }
 
 updateSliderValue()
@@ -51,10 +65,9 @@ generateButton.addEventListener('click', () => {
 copyButton.addEventListener('click', () => {
   const copy = document.getElementById('password-input')
   if (copy.value !== '') {
-    copy.select()
     copy.setSelectionRange(0, 99999)
     navigator.clipboard.writeText(copy.value)
-    showAlertMessage('Copied!', 'alert-success', 'context-body', 3000)
+    showAlertMessage('Copied!', 'success', 3000)
   }
 })
 
@@ -68,3 +81,5 @@ options.forEach((checkbox) => {
     if (countOptionsChecked() === 0) checkbox.checked = 'checked'
   })
 })
+
+darkModeToggleButton.addEventListener('click', toggleDarkMode)
