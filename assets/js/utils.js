@@ -17,7 +17,6 @@ function countOptionsChecked() {
   options.forEach((checkbox) => {
     if (checkbox.checked) c++
   })
-  console.log(c)
   return c
 }
 
@@ -67,7 +66,7 @@ copyButton.addEventListener('click', () => {
   if (copy.value !== '') {
     copy.setSelectionRange(0, 99999)
     navigator.clipboard.writeText(copy.value)
-    showAlertMessage('Copied!', 'success', 3000)
+    showAlertMessage('Copied to clipboard!', 'success', 3000)
   }
 })
 
